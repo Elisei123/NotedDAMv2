@@ -51,11 +51,6 @@ class VeziNoteActivity : AppCompatActivity() {
                 return true
             }
         })
-
-        SearchViewNote.setOnSearchClickListener {
-
-
-        }
     }
 
     override fun onResume() {

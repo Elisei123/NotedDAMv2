@@ -251,5 +251,3 @@ class NotesDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
     }
 
 }
-
-//  Copyright https://github.com/Elisei123/Notes_app_DAM

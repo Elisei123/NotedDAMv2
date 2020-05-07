@@ -52,22 +52,6 @@ class AttractionsAdapter(items: ArrayList<NoteModel>, ctx: Context) :
         viewHolder.textnota!!.text = attraction!!.note_message
         viewHolder.datanota!!.text = attraction.note_date+" "+attraction.note_hour
 
-        //shows how to handle events of views of items
-
-        val current = Calendar.getInstance().time
-        val cal = Calendar.getInstance()
-        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ENGLISH)
-        cal.time = sdf.parse(viewHolder.datanota!!.text.toString()) // all done
-
-
-//        if(current.compareTo(cal.time)<0)
-//        {
-//            viewHolder.textnota!!.setBackgroundColor((context as VeziNoteActivity).resources.getColor(R.color.colorAccent))
-//        }else{
-//            viewHolder.textnota!!.setBackgroundColor((context as VeziNoteActivity).resources.getColor(R.color.colorPrimary))
-//        }
-
-
         viewHolder.editeaza!!.setOnClickListener {
             val intent = Intent(context, EditNoteActivity::class.java).apply {
                 putExtra("noteMessage",attraction.note_message)
