@@ -14,7 +14,7 @@
         android:id="@+id/TextNota"
         android:text="DEMOTEXT"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"/>
+        android:layout_height="wrap_content" />
     <androidx.appcompat.widget.AppCompatTextView
         app:layout_constraintTop_toBottomOf="@+id/TextNota"
         app:layout_constraintBottom_toTopOf="@+id/ButtonEdit"

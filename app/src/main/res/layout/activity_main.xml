@@ -27,26 +27,17 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ButtonNotite"
         app:layout_constraintTop_toBottomOf="@+id/ButtonAdaugaNotite"
-        app:layout_constraintBottom_toTopOf="@+id/ButtonCautaNotite"
+        app:layout_constraintBottom_toTopOf="@+id/SpaceJos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="Vezi notitele"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/ButtonCautaNotite"
-        app:layout_constraintTop_toBottomOf="@+id/ButtonNotite"
-        app:layout_constraintBottom_toTopOf="@+id/SpaceJos"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="Cauta in notite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
     <Space
         android:id="@+id/SpaceJos"
-        app:layout_constraintTop_toBottomOf="@+id/ButtonCautaNotite"
+        app:layout_constraintTop_toBottomOf="@+id/ButtonNotite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

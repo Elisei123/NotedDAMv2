@@ -7,66 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.ContextCompat.startActivity
-import com.example.noteddamv2.EditNoteActivity
-import com.example.noteddamv2.NoteModel
-import com.example.noteddamv2.NotesDBHelper
-import com.example.noteddamv2.R
+import com.example.noteddamv2.*
+import java.text.SimpleDateFormat
+import java.util.*
 
-
-class NoteAdapter(
-    context: Context,
-    products: List<NoteModel?>
-) :
-    ArrayAdapter<NoteModel?>(context, 0, products) {
-    fun getView(convertView: View, position: Int, parent: ViewGroup): View {
-
-        // Get the data item for this position
-        var convertView: View = convertView
-        val nota: NoteModel? = getItem(position)
-
-        // Check if an existing view is being reused, otherwise inflate the view
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context)
-                .inflate(R.layout.element_lista_note, parent, false)
-        }
-        val TextNota: AppCompatTextView =
-            convertView.findViewById(R.id.TextNota)
-        val DataNota: AppCompatTextView = convertView.findViewById(R.id.DataNota)
-        val ButtonEdit: AppCompatButton = convertView.findViewById(R.id.ButtonEdit)
-        val ButtonDelete: AppCompatButton = convertView.findViewById(R.id.ButtonDelete)
-
-
-        if (nota != null) {
-            //region Data Load
-            TextNota.setText(nota.note_message)
-            DataNota.setText(nota.note_date+" "+nota.note_hour)
-
-            ButtonEdit.setOnClickListener{
-                val intent = Intent(context, EditNoteActivity::class.java).apply {
-                    putExtra("noteMessage",  nota.note_message)
-                    putExtra("id_item", nota.noteid)
-                }
-                context.startActivity(intent)
-            }
-
-            ButtonDelete.setOnClickListener{
-                var notesDBHelper = NotesDBHelper(context)
-                notesDBHelper.deleteUser(nota.noteid)
-                Toast.makeText(context, "Notita a fost stearsa.", Toast.LENGTH_SHORT).show()
-            }
-
-        }
-        return convertView
-    }
-}
 
 class AttractionsAdapter(items: ArrayList<NoteModel>, ctx: Context) :
     ArrayAdapter<NoteModel>(ctx, R.layout.element_lista_note, items) {
+    lateinit var notesDBHelper: NotesDBHelper
 
     //view holder is used to prevent findViewById calls
     private class AttractionItemViewHolder {
@@ -90,27 +41,46 @@ class AttractionsAdapter(items: ArrayList<NoteModel>, ctx: Context) :
             viewHolder.datanota = view.findViewById<View>(R.id.DataNota) as AppCompatTextView
             viewHolder.editeaza = view.findViewById<View>(R.id.ButtonEdit) as AppCompatButton
             viewHolder.sterge = view.findViewById<View>(R.id.ButtonDelete) as AppCompatButton
+            view.tag = viewHolder;
         } else {
             //no need to call findViewById, can use existing ones from saved view holder
             viewHolder = view.tag as AttractionItemViewHolder
         }
+        notesDBHelper = NotesDBHelper(context)
 
         val attraction = getItem(i)
         viewHolder.textnota!!.text = attraction!!.note_message
         viewHolder.datanota!!.text = attraction.note_date+" "+attraction.note_hour
 
         //shows how to handle events of views of items
+
+        val current = Calendar.getInstance().time
+        val cal = Calendar.getInstance()
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ENGLISH)
+        cal.time = sdf.parse(viewHolder.datanota!!.text.toString()) // all done
+
+
+//        if(current.compareTo(cal.time)<0)
+//        {
+//            viewHolder.textnota!!.setBackgroundColor((context as VeziNoteActivity).resources.getColor(R.color.colorAccent))
+//        }else{
+//            viewHolder.textnota!!.setBackgroundColor((context as VeziNoteActivity).resources.getColor(R.color.colorPrimary))
+//        }
+
+
         viewHolder.editeaza!!.setOnClickListener {
-            Toast.makeText(context, "Editeazama",
-                Toast.LENGTH_SHORT).show()
+            val intent = Intent(context, EditNoteActivity::class.java).apply {
+                putExtra("noteMessage",attraction.note_message)
+                putExtra("id_item",attraction.noteid)
+            }
+            (context as VeziNoteActivity).startActivity(intent)
         }
         viewHolder.sterge!!.setOnClickListener {
-            Toast.makeText(context, "Stergema",
+            notesDBHelper.deleteUser(attraction.noteid)
+            Toast.makeText(context, "Nota a fost stearsa!",
                 Toast.LENGTH_SHORT).show()
+            (context as VeziNoteActivity).RefreshData();
         }
-
-
-        view.tag = viewHolder
 
         return view
     }

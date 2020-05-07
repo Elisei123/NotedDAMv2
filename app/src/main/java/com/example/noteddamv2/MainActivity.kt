@@ -13,7 +13,6 @@ class MainActivity : AppCompatActivity() {
 
         var ButtonAdaugaNotita:AppCompatButton = findViewById(R.id.ButtonAdaugaNotite)
         var ButtonVeziNotite:AppCompatButton = findViewById(R.id.ButtonNotite)
-        var ButtonCautaNotite:AppCompatButton = findViewById(R.id.ButtonCautaNotite)
 
         ButtonAdaugaNotita.setOnClickListener{
             val intent = Intent(this, AddNoteActivity::class.java).apply {
@@ -23,7 +22,6 @@ class MainActivity : AppCompatActivity() {
 
         ButtonVeziNotite.setOnClickListener {
             val intent = Intent(this, VeziNoteActivity::class.java).apply {
-
             }
             startActivity(intent)
         }
